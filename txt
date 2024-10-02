@@ -1,2 +1,0 @@
-postgres://avnadmin:AVNS_fL2lcV2BnrvY3KPykYP@medium-medium2131.k.aivencloud.com:14853/defaultdb?sslmode=require
-
