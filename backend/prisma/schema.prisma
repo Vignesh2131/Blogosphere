@@ -27,7 +27,7 @@ model Blog{
   author User @relation(fields: [authorId],references:[id])
   authorId String
   content String
-  thumbnail String
+  thumbnail String?
   title String
   published Boolean @default(false)
 }
