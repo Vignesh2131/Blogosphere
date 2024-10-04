@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { decode, verify } from "hono/jwt";
-
+import {  verify } from "hono/jwt";
+import {blogInput, blogUpdateInput} from "@vignesh2131/medium-common"
 type Bindings = {
   DATABASE_URL: string;
   SECRET_KEY: string;
@@ -26,10 +26,16 @@ blogRouter.use("/*", async (c, next) => {
 })
 
 blogRouter.post("/post", async (c) => {
+  const body = await c.req.json();
+  const { success } = blogInput.safeParse(body);
+  if (!success) {
+    c.status(402);
+    return c.json({message:"Data is missing"})
+  }
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
-  const body = await c.req.json();
+  
   const userId =await c.get("userId");
   const blog = await prisma.blog.create({
     data: {
@@ -42,10 +48,16 @@ blogRouter.post("/post", async (c) => {
 });
 
 blogRouter.put("/update", async (c) => {
+  const body = await c.req.json();
+  const { success } = blogUpdateInput.safeParse(body);
+    if (!success) {
+      c.status(402);
+      return c.json({ message: "Data is missing" });
+  }
  const prisma = new PrismaClient({
    datasourceUrl: c.env.DATABASE_URL,
  }).$extends(withAccelerate());
-  const body = await c.req.json();
+  
    const userId = c.get("userId");
   const blog = await prisma.blog.update({
     where: {
