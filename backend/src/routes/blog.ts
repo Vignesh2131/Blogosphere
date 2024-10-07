@@ -27,10 +27,10 @@ blogRouter.use("/*", async (c, next) => {
 
 blogRouter.post("/post", async (c) => {
   const body = await c.req.json();
-  const { success } = blogInput.safeParse(body);
+  const { success,error } = blogInput.safeParse(body);
   if (!success) {
     c.status(402);
-    return c.json({message:"Data is missing"})
+    return c.json({error:error.issues[0].message,field:error.issues[0].path[0]})
   }
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -44,15 +44,18 @@ blogRouter.post("/post", async (c) => {
       authorId:userId 
     },
   })
-  return c.json({id:blog.id})
+  return c.json({id:blog.id,message:"Blog posted!"})
 });
 
 blogRouter.put("/update", async (c) => {
   const body = await c.req.json();
-  const { success } = blogUpdateInput.safeParse(body);
+  const { success,error } = blogUpdateInput.safeParse(body);
     if (!success) {
       c.status(402);
-      return c.json({ message: "Data is missing" });
+     return c.json({
+       error: error.issues[0].message,
+       field: error.issues[0].path[0],
+     });
   }
  const prisma = new PrismaClient({
    datasourceUrl: c.env.DATABASE_URL,
@@ -95,7 +98,7 @@ blogRouter.get("/:id", async (c) => {
   } catch (error) {
     c.status(411);
     return c.json({
-      message:"Error while fetching blog post"
+      error:"Error while fetching blog post"
     })
   }
 

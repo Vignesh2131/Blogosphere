@@ -12,10 +12,10 @@ export const userRouter = new Hono<{ Bindings: Bindings }>();
 
 userRouter.post("/signup", async (c) => {
   const body = await c.req.json();
-  const { success } = signupInput.safeParse(body);
+  const {success, error} = signupInput.safeParse(body);
   if (!success) {
     c.status(411);
-    return c.json({message:"Inputs are not correct"})
+    return c.json({ error: error.issues[0] });
   }
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -31,21 +31,22 @@ userRouter.post("/signup", async (c) => {
       },
     });
     const token = await sign({ id: user.id }, c.env.SECRET_KEY);
-    return c.json({ token });
+    c.status(201);
+    return c.json({ token ,message:"Registered Successfully"});
   } catch (e) {
     console.log(e);
     c.status(403);
-    return c.json({ error: "Invalid signup" });
+    return c.json({ error: "Sign up has been failed!" });
   }
 });
 
 
 userRouter.post("/signin", async (c) => {
   const body = await c.req.json();
-  const { success } = signinInput.safeParse(body);
+  const { success, error} = signinInput.safeParse(body);
   if (!success) {
     c.status(411);
-    return c.json({ message: "Inputs are not correct" });
+    return c.json({ error:error.issues[0].message});
   }
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -58,12 +59,12 @@ userRouter.post("/signin", async (c) => {
         password: body.password,
       },
     });
-    if (!user) return c.json({ message: "User doesn't exists" });
+    if (!user) return c.json({ message: "User doesn't exist! Check the credentials" });
     const token = await sign({ id: user.id }, c.env.SECRET_KEY);
-    return c.json({ token });
+    c.status
+    return c.json({ token, message:"Login successful !" });
   } catch (e) {
-    console.log(e);
     c.status(403);
-    return c.json({ error: "Invalid signup" });
+    return c.json({ error: "Login failed" });
   }
 });
