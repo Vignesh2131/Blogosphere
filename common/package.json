@@ -1,5 +1,5 @@
 {
-  "name": "@vignesh2131/medium-common",
+  "name": "@vignesh2131/medium-validation",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import {  verify } from "hono/jwt";
-import {blogInput, blogUpdateInput} from "@vignesh2131/medium-common"
+import {blogInput, blogUpdateInput} from "@vignesh2131/medium-validation"
 type Bindings = {
   DATABASE_URL: string;
   SECRET_KEY: string;
