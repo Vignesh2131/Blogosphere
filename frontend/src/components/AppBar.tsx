@@ -11,7 +11,7 @@ const AppBar = () => {
   return (
     <div className="px-3 border-b flex justify-between items-center md:px-10 py-4 ">
       <Link
-        to={"/blogs"}
+        to={"/"}
         className="font-semibold flex flex-col justify-center"
       >
         Blogosphere

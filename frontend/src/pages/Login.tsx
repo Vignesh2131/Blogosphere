@@ -19,7 +19,7 @@ const Login = () => {
       );
       const jwt = response.data.token;
       localStorage.setItem("token", jwt);
-      navigate("/blogs");
+      navigate("/");
     } catch (error) {
       alert("Error while signing up");
       console.log(error)
