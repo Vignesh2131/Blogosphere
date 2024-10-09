@@ -2,7 +2,7 @@ name = "backend"
 compatibility_date = "2024-10-01"
 compatibility_flags = [ "nodejs_compat" ]
 
-# [vars]
+ [vars]
 DATABASE_URL = ""
 SECRET_KEY = ""
 # [[kv_namespaces]]
