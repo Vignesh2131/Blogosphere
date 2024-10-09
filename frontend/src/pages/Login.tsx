@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <div className="flex flex-col lg:grid grid-cols-2">
       <div>
-        <div className="h-screen flex flex-col justify-center w-full">
+        <div className="flex flex-col justify-center w-full">
           <div className="flex justify-center">
             <div className="px-10">
               <div className="text-2xl md:text-4xl font-bold">
