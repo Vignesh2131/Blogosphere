@@ -21,21 +21,22 @@ const Publish = () => {
   return (
     <div>
       <AppBar />
-      <div className="flex justify-center w-full pt-8">
+      <div className="flex justify-center w-full mt-4 md:pt-8">
         <div className="max-w-screen-lg w-full">
-          <div>
+          <p className="flex flex-col items-center font-semibold">Start writing..</p>
+          <div className="px-3">
             <input
-              onChange={(e)=>setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
               type="text"
               className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg  block w-full p-2.5"
               placeholder="Title"
               value={title}
             />
           </div>
-          <div className="pt-4">
+          <div className="pt-4 px-3">
             <div>
               <textarea
-                onChange={(e)=>setContent(e.target.value)}
+                onChange={(e) => setContent(e.target.value)}
                 id="message"
                 rows={8}
                 className="focus:outline-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
@@ -44,7 +45,7 @@ const Publish = () => {
               ></textarea>
               <button
                 onClick={publishPost}
-                className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-blue-200 "
+                className="mt-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-blue-200 md:px-5 "
               >
                 Publish post
               </button>
