@@ -17,8 +17,8 @@ const Login = () => {
         `${BACKEND_URL}/api/v1/user/signin`,
         loginInputs
       );
-      const jwt = response.data;
-      localStorage.setItem("token", JSON.stringify(jwt));
+      const jwt = response.data.token;
+      localStorage.setItem("token", jwt);
       navigate("/blogs");
     } catch (error) {
       alert("Error while signing up");
@@ -45,7 +45,7 @@ const Login = () => {
                   onChange={(e) => {
                     setLoginInputs((prev) => ({
                       ...prev,
-                      email: e.target.value,
+                      email: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={loginInputs.email}
@@ -57,7 +57,7 @@ const Login = () => {
                   onChange={(e) => {
                     setLoginInputs((prev) => ({
                       ...prev,
-                      password: e.target.value,
+                      password: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={loginInputs.password}

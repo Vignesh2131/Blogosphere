@@ -46,7 +46,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setRegisterInputs((prev) => ({
                       ...prev,
-                      firstName: e.target.value,
+                      firstName: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={registerInputs.firstName}
@@ -59,7 +59,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setRegisterInputs((prev) => ({
                       ...prev,
-                      lastName: e.target.value,
+                      lastName: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={registerInputs.lastName}
@@ -71,7 +71,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setRegisterInputs((prev) => ({
                       ...prev,
-                      email: e.target.value,
+                      email: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={registerInputs.email}
@@ -83,7 +83,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setRegisterInputs((prev) => ({
                       ...prev,
-                      password: e.target.value,
+                      password: (e.target as HTMLInputElement).value,
                     }));
                   }}
                   value={registerInputs.password}
