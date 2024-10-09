@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vignesh2131/medium-common": "^1.0.0",
     "@vignesh2131/medium-validation": "^1.0.0",
     "axios": "^1.7.7",
     "react": "^18.3.1",
