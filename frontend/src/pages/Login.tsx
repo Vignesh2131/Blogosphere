@@ -31,8 +31,10 @@ const Login = () => {
         <div className="h-screen flex flex-col justify-center w-full">
           <div className="flex justify-center">
             <div className="px-10">
-              <div className="text-4xl font-bold">Let's write the blogs.</div>
-              <div className="text-slate-400 text-center">
+              <div className="text-2xl md:text-4xl font-bold">
+                Let's write the blogs.
+              </div>
+              <div className="text-xs text-slate-400 text-center md:text-base">
                 New user?{" "}
                 <Link className="underline" to="/signup">
                   Signup
@@ -64,19 +66,19 @@ const Login = () => {
                   fieldType="password"
                 />
                 <button
-                  className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  className="w-full mt-4 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 md:text-base"
                   onClick={loginPost}
                 >
                   {" "}
-                  Signin
+                  Login
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="none lg:block">
-        <Quote />
+      <div className="hidden lg:block">
+        <Quote quote="The first thing you need to decide when you build your blog is what you want to accomplish with it, and what it can do if successful" name="Ron Dawson"/>
       </div>
     </div>
   );

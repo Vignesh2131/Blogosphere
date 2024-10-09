@@ -19,21 +19,26 @@ const SignUp = () => {
       const jwt = response.data.token;
       localStorage.setItem("token", jwt);
       navigate("/blogs");
-    } catch (error) {
-      alert("Error while signing up")
+    } catch (err) {
+      alert(`Error while signing up. ${err}`)
     }
   }
   return (
     <div className="flex flex-col lg:grid grid-cols-2">
       <div className="hidden lg:block">
-        <Quote />
+        <Quote
+          quote="If you want to continually grow your blog, you need to learn to blog on a consistent basis"
+          name="Neil Patel"
+        />
       </div>
       <div>
         <div className="h-screen flex flex-col justify-center">
           <div className="flex justify-center">
             <div className="px-10">
-              <div className="text-4xl font-bold">Create an account</div>
-              <div className="text-slate-400 text-center">
+              <div className="text-2xl md:text-4xl font-bold">
+                Create an account
+              </div>
+              <div className="text-xs text-slate-400 text-center md:text-base">
                 Already have an account?{" "}
                 <Link className="underline" to="/login">
                   Login
@@ -90,10 +95,12 @@ const SignUp = () => {
                   fieldType="password"
                 />
                 <button
-                  className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  className="mt-4 w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 md:text-base"
                   onClick={signUpRequest}
-                > Signup
-                  </button>
+                >
+                  {" "}
+                  Signup
+                </button>
               </div>
             </div>
           </div>
