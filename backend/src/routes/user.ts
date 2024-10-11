@@ -10,6 +10,7 @@ type Bindings = {
 
 export const userRouter = new Hono<{ Bindings: Bindings }>();
 
+
 userRouter.post("/signup", async (c) => {
   const body = await c.req.json();
   const {success, error} = signupInput.safeParse(body);
@@ -59,10 +60,13 @@ userRouter.post("/signin", async (c) => {
         password: body.password,
       },
     });
-    if (!user) return c.json({ message: "User doesn't exist! Check the credentials" });
+    if (!user) {
+      c.status(404);
+      return c.json({ message: "User doesn't exist! Check the credentials" });
+     }
     const token = await sign({ id: user.id }, c.env.SECRET_KEY);
-    c.status
-    return c.json({ token, message:"Login successful !" });
+    c.status(200);
+    return c.json({token,  message: "Logged in successfully" });
   } catch (e) {
     c.status(403);
     return c.json({ error: "Login failed" });
