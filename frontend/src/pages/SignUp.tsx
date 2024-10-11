@@ -29,8 +29,9 @@ const SignUp = () => {
     } catch (err) {
        if (axios.isAxiosError(err)) {
          const message =
-           err.response?.data?.error?.path?.[0] || "An error occurred";
+           err.response?.data?.error.path[0] || "An error occurred";
          notify(`Invalid ${message}`);
+         setLoading(false);
        } else {
          notify("An unexpected error occurred");
        }

@@ -34,9 +34,9 @@ const Login = () => {
     } catch (err) {
        if (axios.isAxiosError(err)) {
          const message =
-          err.response?.data?.error?.path?.[0] || "An error occurred";
-         notify(`Invalid ${message}`);
-      
+          err.response?.data?.error || "An error occurred";
+         notify(`${message}`);
+         setLoading(false);
        } else {
          notify("An unexpected error occurred");
        }
