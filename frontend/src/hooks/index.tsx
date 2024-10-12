@@ -6,12 +6,14 @@ export interface Blogs{
     "title": string;
     "id": string;
     "author": {
-        "firstName":string
+        "firstName": string,
+        "id":string,
     }
 }
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [allBlogs, setBlogs] = useState<Blogs[]>([]);
+    const [name, setName] = useState("");
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
             headers: {
@@ -20,10 +22,12 @@ export const useBlogs = () => {
         })
             .then((res) => {
                 setBlogs(res.data.blogs);
+                setName(res.data.name.firstName);
                 setLoading(false);
         })
     }, [])
-    return {loading, allBlogs}
+
+    return {loading, allBlogs,name}
 
 }
 
@@ -43,4 +47,32 @@ export const useBlog = ({id}:{id:string}) => {
         });
     }, [id]);
     return { loading, blog };
+}
+
+
+export const useProfile = () => {
+    const [loading, setLoading] = useState(true);
+    const [profile, setProfileBlogs] = useState<Blogs[]>([]);
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/userProfile`, {
+            headers: {
+                Authorization:localStorage.getItem("token")
+            }
+        })
+            .then((res) => {
+                setProfileBlogs(res.data.blogs);
+                setLoading(false);
+        })
+    }, [])
+    return {loading,profile}
+    
+}
+
+export const useDeleteBlog = ({id}:{id:string}) => {
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`)
+            .then(() => setLoading(false))
+    }, [id]);
+    return {loading}
 }

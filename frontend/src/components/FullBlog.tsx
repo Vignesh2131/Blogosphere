@@ -1,7 +1,11 @@
 import AppBar from "./AppBar"
+
 import { Blogs } from "../hooks"
 import Avatar from "./Avatar";
-const FullBlog = ({blog}:{blog:Blogs}) => {
+
+const FullBlog = ({ blog }: { blog: Blogs }) => {
+
+
     return (
       <div>
         <AppBar />
@@ -12,17 +16,19 @@ const FullBlog = ({blog}:{blog:Blogs}) => {
                 <div className="text-2xl font-extrabold md:text-5xl">
                   {blog.title}
                 </div>
-                <div className="text-sm text-slate-500 pt-2 md:text-base">
-                  Posted on 9th Oct 2024
+                <div className="flex items-center gap-2 pt-2">
+                  <div className="text-sm text-slate-500  md:text-base">
+                    Posted on 9th Oct 2024
+                  </div>
                 </div>
-                <div className="pt-4">{blog.content}</div>
+                <div className="pt-2">{blog.content}</div>
               </div>
               <div className="col-span-4 ">
                 <div className="flex flex-col items-center text-sm text-slate-600 underline md:text-lg">
                   Author
                 </div>
                 <div className="flex flex-col justify-center items-center w-full pt-3">
-                  <div className="pr-2 flex flex-col sm:items-center">
+                  <div className="pr-2 flex flex-col sm:items-center md:flex-row">
                     <Avatar authorname={blog.author.firstName} />
                   </div>
                   <div>

@@ -28,7 +28,7 @@ const BlogCard = ({authorName,title,content,publishedDate,id}:BlogCardProps) => 
           </div>
         </div>
         <div className="text-lg font-bold py-2 md:text-xl">{title}</div>
-        <div className="text-sm font-thin py-2 md:text-md">
+        <div className="text-sm font-thin py-2 md:text-base">
           {content.slice(0, 100) + "..."}
         </div>
         <div className="text-slate-500 text-xs font-thin py-2 md:text-sm">

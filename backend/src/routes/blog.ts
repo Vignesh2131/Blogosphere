@@ -10,12 +10,11 @@ type Bindings = {
 
 export const blogRouter = new Hono<{ Bindings:Bindings, Variables:{userId:string} }>();
 
-
 blogRouter.use("/*", async (c, next) => {
   const authHeader = c.req.header("authorization")||"";
   const user = await verify(authHeader, c.env.SECRET_KEY);
   if (user) {
-    c.set('userId', user.id);
+    c.set("userId", user.id);
     await next();
   } else {
     c.status(402)
@@ -36,7 +35,7 @@ blogRouter.post("/post", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   
-  const userId =await c.get("userId");
+  const userId = await c.get("userId");
   const blog = await prisma.blog.create({
     data: {
       title: body.title,
@@ -46,6 +45,32 @@ blogRouter.post("/post", async (c) => {
   })
   return c.json({id:blog.id,message:"Blog posted!"})
 });
+
+
+blogRouter.get("/userProfile", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const userId = c.get("userId");
+  const blogs = await prisma.blog.findMany({
+    where: {
+      authorId: userId,
+    },
+    select: {
+      content: true,
+      title: true,
+      id: true,
+      author: {
+        select: {
+          firstName: true,
+          id: true,
+        }
+      }
+    },
+  });
+  return c.json(blogs);
+});
+
 
 blogRouter.put("/update", async (c) => {
   const body = await c.req.json();
@@ -74,11 +99,23 @@ blogRouter.put("/update", async (c) => {
  });
  return c.json({ id: blog.id });
 });
-//pagination
+
 blogRouter.get("/bulk", async (c) => {
+  const userId = c.get("userId");
+  
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
+
+  const name = await prisma.user.findFirst({
+    where: {
+      id: userId
+    },
+    select: {
+      firstName: true
+    }
+  })
+  
   const blogs = await prisma.blog.findMany({
     select: {
       content: true,
@@ -86,13 +123,16 @@ blogRouter.get("/bulk", async (c) => {
       id: true,
       author: {
         select: {
-          firstName: true
+          firstName: true,
+          id:true,
         }
       }
     }
   });
-  return c.json({blogs})
+  return c.json({blogs, name})
 });
+
+
 
 blogRouter.get("/:id", async (c) => {
  const prisma = new PrismaClient({
@@ -110,7 +150,8 @@ blogRouter.get("/:id", async (c) => {
          content: true,
          author: {
            select: {
-             firstName:true
+             firstName: true,
+             id:true,
            }
          }
        }
@@ -124,3 +165,17 @@ blogRouter.get("/:id", async (c) => {
   }
 
 });
+
+blogRouter.delete("/:id", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const id = await c.req.param("id");
+  const blog = await prisma.blog.delete({
+    where: {
+      id: id,
+    },
+  });
+  c.status(200);
+  return c.json({ blog });
+})

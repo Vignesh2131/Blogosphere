@@ -1,9 +1,12 @@
-import Avatar from "./Avatar"
+
 import { Link,useNavigate } from "react-router-dom"
 import { IoIosLogOut } from "react-icons/io";
 import { FaPlus } from "react-icons/fa";
+import { useBlogs } from "../hooks";
+import { RxAvatar } from "react-icons/rx";
 const AppBar = () => {
   const navigate = useNavigate();
+  const { name } = useBlogs();
   function logout() {
     localStorage.removeItem("token");
     navigate("/login")
@@ -22,10 +25,12 @@ const AppBar = () => {
             type="button"
             className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-xs  text-center md:text-sm p-2.5"
           >
-            <FaPlus/>
+            <FaPlus />
           </button>
         </Link>
-        <Avatar authorname="Johnwick" />
+        <Link to={`/profile/${name}`}>
+          <RxAvatar size={28} />
+        </Link>
         <div
           className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-black"
           onClick={logout}

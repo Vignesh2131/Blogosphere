@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { sign } from "hono/jwt";
+import { sign,verify } from "hono/jwt";
 import {signinInput,signupInput} from "@vignesh2131/medium-validation"
 type Bindings = {
   DATABASE_URL: string;
@@ -9,6 +9,7 @@ type Bindings = {
 };
 
 export const userRouter = new Hono<{ Bindings: Bindings }>();
+
 
 
 userRouter.post("/signup", async (c) => {
@@ -31,7 +32,7 @@ userRouter.post("/signup", async (c) => {
         password: body.password,
       },
     });
-    const token = await sign({ id: user.id }, c.env.SECRET_KEY);
+    const token = await sign({ id: user.id, firstName: user.firstName }, c.env.SECRET_KEY);
     c.status(201);
     return c.json({ token ,message:"Registered Successfully"});
   } catch (e) {
@@ -64,7 +65,7 @@ userRouter.post("/signin", async (c) => {
       c.status(404);
       return c.json({ message: "User doesn't exist! Check the credentials" });
      }
-    const token = await sign({ id: user.id }, c.env.SECRET_KEY);
+    const token = await sign({ id: user.id , firstName: user.firstName }, c.env.SECRET_KEY);
     c.status(200);
     return c.json({token,  message: "Logged in successfully" });
   } catch (e) {
@@ -72,3 +73,4 @@ userRouter.post("/signin", async (c) => {
     return c.json({ error: "Login failed" });
   }
 });
+
