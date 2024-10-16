@@ -39,7 +39,7 @@ const SignUp = () => {
   }
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <div className="flex flex-col lg:grid grid-cols-2">
         <div className="hidden lg:block">
           <Quote
@@ -51,8 +51,13 @@ const SignUp = () => {
           <div className="h-screen flex flex-col justify-center">
             <div className="flex justify-center">
               <div className="px-10">
-                <div>
-                  <img src="" alt="" />
+                <div className="flex justify-center mb-4 font-bold items-center md:text-xl">
+                  <img
+                    src="./logo.png"
+                    alt=""
+                    className="h-6 w-6 md:h-8 md:w-8"
+                  />
+                  logosphere
                 </div>
                 <div className="text-2xl md:text-4xl font-bold">
                   Create an account
@@ -104,7 +109,7 @@ const SignUp = () => {
                     className="mt-4 w-full flex flex-col items-center text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 md:text-base"
                     onClick={signUpRequest}
                   >
-                    {loading ? <Spinner /> : "Sign Up"} 
+                    {loading ? <Spinner /> : "Sign Up"}
                   </button>
                 </div>
               </div>

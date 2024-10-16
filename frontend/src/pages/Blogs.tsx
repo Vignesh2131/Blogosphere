@@ -21,7 +21,17 @@ const Blogs = () => {
       </div>
     );
   }
-
+  if(allBlogs?.length === 0){
+    return (
+      <div>
+        <div className="flex justify-center mt-7">
+          <div>
+            <h1 className="text-xl font-bold md:text-3xl">No blogs found</h1>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div>
       <div className="flex justify-center">
