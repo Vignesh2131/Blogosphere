@@ -2,7 +2,6 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { FiEdit } from "react-icons/fi";
 interface ProfileBlogsProps {
   title: string;
     content: string;
