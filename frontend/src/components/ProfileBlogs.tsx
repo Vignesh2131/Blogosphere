@@ -2,6 +2,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
 interface ProfileBlogsProps {
   title: string;
     content: string;
@@ -32,25 +33,32 @@ const ProfileBlogs = ({ title, content, id,check }: ProfileBlogsProps) => {
         {content.slice(0, 70) + "..."}
       </p>
       <div className="flex items-center justify-between ">
-        <Link
-          to={`/blog/${id}`}
-          className="inline-flex items-center px-3 py-2 text-sm font-light text-center text-white bg-green-700 rounded-lg hover:bg-blue-800"
-        >
-          Read more
-          <svg
-            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
+        <div className="flex items-center gap-3">
+          <Link
+            to={`/blog/${id}`}
+            className="inline-flex items-center px-3 py-2 text-sm font-light text-center text-white bg-green-700 rounded-lg hover:bg-blue-800"
           >
-            <path stroke="currentColor" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </Link>
-        {check ? <MdOutlineDeleteOutline
-          onClick={deleteBlog}
-          className="w-6 h-6 text-red-600 cursor-pointer"
-        />: ""}
+            Read more
+            <svg
+              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path stroke="currentColor" d="M1 5h12m0 0L9 1m4 4L9 9" />
+            </svg>
+          </Link>
+        </div>
+
+        {check ? (
+          <MdOutlineDeleteOutline
+            onClick={deleteBlog}
+            className="w-6 h-6 text-red-600 cursor-pointer"
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

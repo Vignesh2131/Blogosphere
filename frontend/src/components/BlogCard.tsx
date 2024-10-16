@@ -42,7 +42,7 @@ const BlogCard = ({authorName,title,content,publishedDate,id}:BlogCardProps) => 
           </p>
           <Link
             to={`/blog/${id}`}
-            className="text-primary hover:underline text-sm sm:text-base"
+            className="text-primary underline hover:underline text-sm sm:text-base"
           >
             Read more
           </Link>
