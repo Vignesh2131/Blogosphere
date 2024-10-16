@@ -41,12 +41,12 @@ const Publish = () => {
     <div>
       <div className="flex justify-center w-full mt-4 md:pt-8">
         <div className="max-w-screen-lg w-full">
-          <p className="pb-3 flex flex-col items-center font-semibold text-sm md:text-lg">Start writing..</p>
+          <p className="pb-3 flex flex-col items-center font-semibold text-base md:text-lg">Start writing..</p>
           <div className="px-3">
             <input
               onChange={(e) => setTitle(e.target.value)}
               type="text"
-              className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg  block w-full p-2.5"
+              className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg  block w-full p-2.5 md:text-base"
               placeholder="Title (Min 10 Characters)"
               value={title}
             />
