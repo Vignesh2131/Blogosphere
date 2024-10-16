@@ -1,8 +1,10 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { sign,verify } from "hono/jwt";
-import {signinInput,signupInput} from "@vignesh2131/medium-validation"
+import { sign } from "hono/jwt";
+import { signinInput, signupInput } from "@vignesh2131/medium-validation"
+import { hashPassword,verifyPassword } from "../hash";
+
 type Bindings = {
   DATABASE_URL: string;
   SECRET_KEY: string;
@@ -22,14 +24,14 @@ userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
- 
+  const hashed = await hashPassword(body.password);
   try {
     const user = await prisma.user.create({
       data: {
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
-        password: body.password,
+        password: hashed,
       },
     });
     const token = await sign({ id: user.id, firstName: user.firstName }, c.env.SECRET_KEY);
@@ -58,19 +60,23 @@ userRouter.post("/signin", async (c) => {
     const user = await prisma.user.findFirst({
       where: {
         email: body.email,
-        password: body.password,
       },
     });
     if (!user) {
       c.status(404);
-      return c.json({ message: "User doesn't exist! Check the credentials" });
-     }
-    const token = await sign({ id: user.id , firstName: user.firstName }, c.env.SECRET_KEY);
+      return c.json({ message: "User not found" });
+    }
+    const verify = await verifyPassword(user?.password||"", body.password);
+    if (!verify) {
+        c.status(404);
+        return c.json({ message: "Wrong password" });
+    }
+    
+    const token = await sign({ id: user?.id , firstName: user?.firstName }, c.env.SECRET_KEY);
     c.status(200);
-    return c.json({token,  message: "Logged in successfully", name:user.firstName });
+    return c.json({token,  message: "Logged in successfully", name:user?.firstName });
   } catch (e) {
     c.status(403);
     return c.json({ error: "Login failed" });
   }
 });
-
