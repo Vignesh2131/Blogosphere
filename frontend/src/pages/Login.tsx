@@ -7,11 +7,13 @@ import Spinner from "../components/Spinner";
 import { useState } from "react";
 import {SigninInput} from "@vignesh2131/medium-validation";
 import Quote from "../components/Quote";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../config";;
 import axios from "axios";
+
 const Login = () => {
+
   const navigate = useNavigate();
-  const[loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const [loginInputs, setLoginInputs] = useState<SigninInput>({
     email: "",
     password: "",
@@ -30,6 +32,7 @@ const Login = () => {
         navigate("/");
       }
       notify(response.data.message); 
+ 
       setLoading(false);
     } catch (err) {
        if (axios.isAxiosError(err)) {

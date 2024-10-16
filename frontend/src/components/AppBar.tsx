@@ -3,10 +3,10 @@ import { Link,useNavigate } from "react-router-dom"
 import { IoIosLogOut } from "react-icons/io";
 import { FaPlus } from "react-icons/fa";
 import { useBlogs } from "../hooks";
-import { RxAvatar } from "react-icons/rx";
+import Avatar from "./Avatar";
 const AppBar = () => {
   const navigate = useNavigate();
-  const { name } = useBlogs();
+  const { name,id } = useBlogs();
   function logout() {
     localStorage.removeItem("token");
     navigate("/login")
@@ -28,8 +28,8 @@ const AppBar = () => {
             <FaPlus />
           </button>
         </Link>
-        <Link to={`/profile/${name}`}>
-          <RxAvatar size={28} />
+        <Link to={`/profile/${id}`}>
+          <Avatar authorname={name} />
         </Link>
         <div
           className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-black"

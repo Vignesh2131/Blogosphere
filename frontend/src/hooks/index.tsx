@@ -5,6 +5,7 @@ export interface Blogs{
     "content": string;
     "title": string;
     "id": string;
+    "publishedDate":string,
     "author": {
         "firstName": string,
         "id":string,
@@ -14,6 +15,7 @@ export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [allBlogs, setBlogs] = useState<Blogs[]>([]);
     const [name, setName] = useState("");
+    const [id, setId] = useState("");
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
             headers: {
@@ -23,11 +25,12 @@ export const useBlogs = () => {
             .then((res) => {
                 setBlogs(res.data.blogs);
                 setName(res.data.name.firstName);
+                setId(res.data.userId);
                 setLoading(false);
         })
     }, [])
 
-    return {loading, allBlogs,name}
+    return {loading, allBlogs,name,id}
 
 }
 
@@ -46,25 +49,27 @@ export const useBlog = ({id}:{id:string}) => {
           setLoading(false);
         });
     }, [id]);
-    return { loading, blog };
+    return { loading, blog,name };
 }
 
 
-export const useProfile = () => {
+export const useProfile = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
+    const [check, setCheck] = useState(true);
     const [profile, setProfileBlogs] = useState<Blogs[]>([]);
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/userProfile`, {
+        axios.get(`${BACKEND_URL}/api/v1/blog/userProfile/${id}`, {
             headers: {
                 Authorization:localStorage.getItem("token")
             }
         })
             .then((res) => {
                 setProfileBlogs(res.data.blogs);
+                setCheck(res.data.check)
                 setLoading(false);
         })
-    }, [])
-    return {loading,profile}
+    }, [id])
+    return {loading,profile,check}
     
 }
 

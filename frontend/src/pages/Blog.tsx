@@ -1,7 +1,7 @@
 import { useBlog } from "../hooks"
 import { useParams } from "react-router-dom";
 import FullBlog from "../components/FullBlog";
-import AppBar from "../components/AppBar";
+
 
 const Blog = () => {
   const {id} = useParams();
@@ -11,7 +11,6 @@ const Blog = () => {
   if (loading||!blog) {
     return (
       <div>
-        <AppBar/>
         <div className="flex flex-col justify-center h-screen">
           <div className="flex justify-center">
             <div role="status">

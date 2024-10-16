@@ -1,15 +1,13 @@
-import AppBar from "./AppBar"
 
 import { Blogs } from "../hooks"
 import Avatar from "./Avatar";
-
+import { Link } from "react-router-dom";
 const FullBlog = ({ blog }: { blog: Blogs }) => {
 
 
     return (
       <div>
-        <AppBar />
-        <div className="my-4">
+        <div className="my-2">
           <div className="flex justify-center">
             <div className="flex flex-col items-center justify-center gap-8 px-10 w-full max-w-screen-xl pt-4 md:grid grid-cols-12 md:pt-8 lg:pt-12">
               <div className="col-span-8">
@@ -18,7 +16,9 @@ const FullBlog = ({ blog }: { blog: Blogs }) => {
                 </div>
                 <div className="flex items-center gap-2 pt-2">
                   <div className="text-sm text-slate-500  md:text-base">
-                    Posted on 9th Oct 2024
+                    {`Posted on ${blog.publishedDate
+                      .slice(0, 10)
+                      .replace(/-/g, "/")}`}
                   </div>
                 </div>
                 <div className="pt-2">{blog.content}</div>
@@ -28,8 +28,10 @@ const FullBlog = ({ blog }: { blog: Blogs }) => {
                   Author
                 </div>
                 <div className="flex flex-col justify-center items-center w-full pt-3">
-                  <div className="pr-2 flex flex-col sm:items-center md:flex-row">
-                    <Avatar authorname={blog.author.firstName} />
+                  <div className="flex flex-col items-center md:flex-row">
+                    <Link to={`/profile/${blog.author.id}`}>
+                      <Avatar authorname={blog.author.firstName} />
+                    </Link>
                   </div>
                   <div>
                     <div className="font-bold text-base text-center md:text-xl">

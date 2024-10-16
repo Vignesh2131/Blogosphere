@@ -1,4 +1,4 @@
-import AppBar from "../components/AppBar"
+import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
 import { Blogs } from "../hooks";
@@ -8,26 +8,25 @@ import { useState, useEffect } from "react";
 import ProfileBlogs from "../components/ProfileBlogs";
 
 const User = () => {
-    const [loading, setLoading] = useState(true);
-    const [profile, setProfileBlogs] = useState<Blogs[]>([]);
-    const name = useParams();
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfileBlogs] = useState<Blogs[]>([]);
+  const [check, setCheck] = useState(true);
+  const {id} = useParams();
     useEffect(() => {
       axios
-        .get(`${BACKEND_URL}/api/v1/blog/userProfile`, {
+        .get(`${BACKEND_URL}/api/v1/blog/userProfile/${id}`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
         })
         .then((res) => {
-          setProfileBlogs(res.data);
+          setProfileBlogs(res.data.blogs);
+          setCheck(res.data.check)
           setLoading(false);
         });
-    }, [name]);
-
-   
+    }, [id]);
     if (loading) {
         <div>
-            <AppBar />
             <div>
                 <Spinner/>
             </div>
@@ -35,7 +34,6 @@ const User = () => {
     }
   return (
     <div>
-      <AppBar />
       <div className="flex justify-center flex-col items-center mt-3">
         <div>
           <h1 className="text-center text-base font-semibold md:text-xl">
@@ -46,6 +44,7 @@ const User = () => {
               profile.map((blog) => {
                 return (
                   <ProfileBlogs
+                    check={check}
                         key={blog.id}
                         id={blog.id}
                     title={blog.title}
@@ -55,7 +54,14 @@ const User = () => {
               })
             ) : (
               <div className="flex justify-center items-start h-screen">
-                <Spinner />
+                  {profile.length == 0 && (
+                    <div className="flex flex-col justify-center mt-8">
+                      <div className="flex items-center">
+                        <p className="font-semibold">No blogs posted. {check && <Link className="underline font-light" to="/publish">Create one !</Link>}</p>
+                      </div>
+
+                    </div>
+                )}
               </div>
             )}
           </div>

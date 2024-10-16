@@ -5,10 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 interface ProfileBlogsProps {
   title: string;
     content: string;
-    id: string;
+  id: string;
+  check: boolean;
 }
 
-const ProfileBlogs = ({ title, content, id }: ProfileBlogsProps) => {
+const ProfileBlogs = ({ title, content, id,check }: ProfileBlogsProps) => {
     const navigate = useNavigate();
   async function deleteBlog() {
     const res = await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
@@ -46,10 +47,10 @@ const ProfileBlogs = ({ title, content, id }: ProfileBlogsProps) => {
             <path stroke="currentColor" d="M1 5h12m0 0L9 1m4 4L9 9" />
           </svg>
         </Link>
-        <MdOutlineDeleteOutline
+        {check ? <MdOutlineDeleteOutline
           onClick={deleteBlog}
           className="w-6 h-6 text-red-600 cursor-pointer"
-        />
+        />: ""}
       </div>
     </div>
   );

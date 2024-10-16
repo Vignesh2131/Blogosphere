@@ -51,6 +51,9 @@ const SignUp = () => {
           <div className="h-screen flex flex-col justify-center">
             <div className="flex justify-center">
               <div className="px-10">
+                <div>
+                  <img src="" alt="" />
+                </div>
                 <div className="text-2xl md:text-4xl font-bold">
                   Create an account
                 </div>

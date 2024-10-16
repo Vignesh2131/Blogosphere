@@ -67,7 +67,7 @@ userRouter.post("/signin", async (c) => {
      }
     const token = await sign({ id: user.id , firstName: user.firstName }, c.env.SECRET_KEY);
     c.status(200);
-    return c.json({token,  message: "Logged in successfully" });
+    return c.json({token,  message: "Logged in successfully", name:user.firstName });
   } catch (e) {
     c.status(403);
     return c.json({ error: "Login failed" });

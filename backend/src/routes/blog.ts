@@ -40,26 +40,29 @@ blogRouter.post("/post", async (c) => {
     data: {
       title: body.title,
       content: body.content,
-      authorId:userId 
+      authorId: userId,
     },
   })
   return c.json({id:blog.id,message:"Blog posted!"})
 });
 
 
-blogRouter.get("/userProfile", async (c) => {
+blogRouter.get("/userProfile/:id", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const userId = c.get("userId");
+  const id = await c.req.param("id");
+  const check = id ==userId
   const blogs = await prisma.blog.findMany({
     where: {
-      authorId: userId,
+      authorId: id,
     },
     select: {
       content: true,
       title: true,
       id: true,
+      publishedDate:true,
       author: {
         select: {
           firstName: true,
@@ -68,7 +71,7 @@ blogRouter.get("/userProfile", async (c) => {
       }
     },
   });
-  return c.json(blogs);
+  return c.json({blogs,check});
 });
 
 
@@ -102,7 +105,6 @@ blogRouter.put("/update", async (c) => {
 
 blogRouter.get("/bulk", async (c) => {
   const userId = c.get("userId");
-  
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -121,6 +123,7 @@ blogRouter.get("/bulk", async (c) => {
       content: true,
       title: true,
       id: true,
+      publishedDate:true,
       author: {
         select: {
           firstName: true,
@@ -129,7 +132,7 @@ blogRouter.get("/bulk", async (c) => {
       }
     }
   });
-  return c.json({blogs, name})
+  return c.json({blogs, name, userId:userId})
 });
 
 
@@ -148,6 +151,7 @@ blogRouter.get("/:id", async (c) => {
          id: true,
          title: true,
          content: true,
+         publishedDate:true,
          author: {
            select: {
              firstName: true,

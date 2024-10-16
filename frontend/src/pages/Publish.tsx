@@ -1,4 +1,4 @@
-import AppBar from "../components/AppBar"
+
 import Spinner from "../components/Spinner";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -39,7 +39,6 @@ const Publish = () => {
   }
   return (
     <div>
-      <AppBar />
       <div className="flex justify-center w-full mt-4 md:pt-8">
         <div className="max-w-screen-lg w-full">
           <p className="pb-3 flex flex-col items-center font-semibold text-sm md:text-lg">Start writing..</p>

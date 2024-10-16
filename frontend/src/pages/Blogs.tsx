@@ -1,14 +1,14 @@
 
 import BlogCard from "../components/BlogCard"
-import AppBar from "../components/AppBar";
 import { useBlogs } from "../hooks";
 import Skelton from "../components/Skelton";
+
+
 const Blogs = () => {
-  const { loading,allBlogs } = useBlogs();
+  const { loading, allBlogs} = useBlogs();
   if (loading) {
     return (
       <div>
-        <AppBar />
         <div className="flex justify-center">
           <div>
             <Skelton />
@@ -21,9 +21,9 @@ const Blogs = () => {
       </div>
     );
   }
+
   return (
     <div>
-      <AppBar/>
       <div className="flex justify-center">
         <div className="max-w-5xl gap-4">
           {allBlogs?.map(blog => <BlogCard
@@ -32,7 +32,7 @@ const Blogs = () => {
             content={blog.content}
             id={blog.id}
             key={blog.id}
-            publishedDate="21/10/22"
+            publishedDate={blog.publishedDate.slice(0,10)}
           />)}
         </div>
       </div>
